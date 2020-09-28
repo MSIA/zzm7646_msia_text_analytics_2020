@@ -109,8 +109,8 @@ def spacy_parallelization(data):
 if __name__ == '__main__':
 
 	#####################################################################################
-    ##################################### Problem 1 #####################################
-    #####################################################################################
+	##################################### Problem 1 #####################################
+	#####################################################################################
 
 	# get path
 	path = os.getcwd() + '/20_newsgroups/sci.space/*'
@@ -165,8 +165,8 @@ if __name__ == '__main__':
 
 	# spacy
 	start = time.time()
-    result = spacy_parallelization(sci_space)
-    print ("Spacy using threadding takes: %s"%(time.time()-start))
+	result = spacy_parallelization(sci_space)
+	print ("Spacy using threadding takes: %s"%(time.time()-start))
 
 	count = multiprocessing.cpu_count()
 	pool = multiprocessing.Pool(count)
