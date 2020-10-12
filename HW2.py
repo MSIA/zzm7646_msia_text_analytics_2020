@@ -28,7 +28,7 @@ def preprocess(df):
     
     # Return to text file
     with open('yelp_text_norm.txt', 'w') as f:
-        for l in text_norm:
+        for l in text_norm_string:
             f.write("%s\n" % l)
     
     return(text_norm)
