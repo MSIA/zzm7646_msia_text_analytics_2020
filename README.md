@@ -1,5 +1,3 @@
-# zzm7646_msia_text_analytics_2020
-
 ## Individual Project: COVID Text Sentiment Classification
 
 
