@@ -37,7 +37,7 @@ def data_import(filepath, col, col_new):
 
     return df
 
-# ext Cleaning
+# Text Cleaning
 def preprocess(x, col, label):
     '''tokenize and normalize'''
     stop_words = set(stopwords.words('english')) 
