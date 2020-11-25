@@ -37,7 +37,7 @@ def data_import(filepath, col, col_new):
 
     return df
 
-# Text Cleaning
+# ext Cleaning
 def preprocess(x, col, label):
     '''tokenize and normalize'''
     stop_words = set(stopwords.words('english')) 
@@ -88,7 +88,7 @@ def main():
     print('Train models!!!!')
     # Logistic
 
-    lr1 = LogisticRegression(random_state=66)  # fit logistic
+    lr1 = LogisticRegression(random_state=66,solver='lbfgs')  # fit logistic
     lr1.fit(X_train, y_train)
     y_pred = lr1.predict(X_test) # predict
 
@@ -97,7 +97,7 @@ def main():
     print("Accuracy: %0.4f"%accuracy_score(y_test, y_pred))
     print("Micro-averaged F1 score: %0.4f"%f1_score(y_test, y_pred, average='micro'))
 
-    lr2 = LogisticRegression(verbose=1, random_state=66, C=15, penalty='l2')  # fit logistic
+    lr2 = LogisticRegression(random_state=66, C=15, penalty='l2',solver='lbfgs')  # fit logistic
     lr2.fit(X_train, y_train)
     y_pred = lr2.predict(X_test) # predict
 
@@ -106,7 +106,7 @@ def main():
     print("Accuracy: %0.4f"%accuracy_score(y_test, y_pred))
     print("Micro-averaged F1 score: %0.4f"%f1_score(y_test, y_pred, average='micro'))
 
-    lr3 = LogisticRegression(verbose=1, random_state=66, C=5, penalty='l2')
+    lr3 = LogisticRegression(random_state=66, C=10, penalty='l2',solver='lbfgs')
     lr3.fit(X_train, y_train)
     y_pred = lr3.predict(X_test) # predict
 
@@ -115,7 +115,7 @@ def main():
     print("Accuracy: %0.4f"%accuracy_score(y_test, y_pred))
     print("Micro-averaged F1 score: %0.4f"%f1_score(y_test, y_pred, average='micro'))
 
-    lr4 = LogisticRegression(verbose=1, random_state=66, C=5, penalty='l1', solver='liblinear')
+    lr4 = LogisticRegression(random_state=66, C=15, penalty='l2',solver='liblinear')
     lr4.fit(X_train, y_train)
     y_pred = lr4.predict(X_test) # predict
 
@@ -124,7 +124,7 @@ def main():
     print("Accuracy: %0.4f"%accuracy_score(y_test, y_pred))
     print("Micro-averaged F1 score: %0.4f"%f1_score(y_test, y_pred, average='micro'))
 
-    lr5 = LogisticRegression(verbose=1, random_state=66, C=1, penalty='l1', solver='liblinear')
+    lr5 = LogisticRegression(random_state=66, C=2, penalty='l1',solver='liblinear')
     lr5.fit(X_train, y_train)
     y_pred = lr5.predict(X_test) # predict
 
@@ -161,7 +161,7 @@ def main():
     print("F1 score: %0.4f"%(2*precision*recall/(precision+recall)))
 
     # fasttext model - setting 2
-    ft_model3 = fasttext.train_supervised('fasttext_train.txt',lr=0.1, wordNgrams=2)
+    ft_model3 = fasttext.train_supervised('fasttext_train.txt',lr=0.2, wordNgrams=2)
     result = ft_model3.test('fasttext_test.txt')
     precision = result[1]
     recall = result[2]
@@ -169,7 +169,7 @@ def main():
     print("F1 score: %0.4f"%(2*precision*recall/(precision+recall)))
 
     # fasttext model - setting 3
-    ft_model4 = fasttext.train_supervised('fasttext_train.txt', wordNgrams=2, loss='softmax')
+    ft_model4 = fasttext.train_supervised('fasttext_train.txt', lr=0.5, wordNgrams=2)
     result = ft_model4.test('fasttext_test.txt')
     precision = result[1]
     recall = result[2]
@@ -187,7 +187,7 @@ def main():
     print("Accuracy: %0.4f"%accuracy_score(y_test, y_pred))
     print("Micro-averaged F1 score: %0.4f"%f1_score(y_test, y_pred, average='micro'))
 
-    svm2 = LinearSVC(random_state=66, loss='hinge', C=5)
+    svm2 = LinearSVC(random_state=66, penalty='l2', C=10, loss='hinge')
     svm2.fit(X_train, y_train)
     y_pred = svm2.predict(X_test)
     
@@ -195,7 +195,7 @@ def main():
     print("Accuracy: %0.4f"%accuracy_score(y_test, y_pred))
     print("Micro-averaged F1 score: %0.4f"%f1_score(y_test, y_pred, average='micro'))
 
-    svm3 = LinearSVC(random_state=66, penalty='l2', loss='hinge', max_iter=500)
+    svm3 = LinearSVC(random_state=66, penalty='l2', loss='squared_hinge', dual=False)
     svm3.fit(X_train, y_train)
     y_pred = svm3.predict(X_test)
     
@@ -203,17 +203,9 @@ def main():
     print("Accuracy: %0.4f"%accuracy_score(y_test, y_pred))
     print("Micro-averaged F1 score: %0.4f"%f1_score(y_test, y_pred, average='micro'))
 
-    svm4 = LinearSVC(random_state=66, penalty='l1', loss='squared_hinge',max_iter=500, dual=False)
+    svm4 = LinearSVC(random_state=66, penalty='l1', loss='squared_hinge', dual=False)
     svm4.fit(X_train, y_train)
     y_pred = svm4.predict(X_test)
-    
-    print('SVM model 4:')
-    print("Accuracy: %0.4f"%accuracy_score(y_test, y_pred))
-    print("Micro-averaged F1 score: %0.4f"%f1_score(y_test, y_pred, average='micro'))
-
-    svm5 = LinearSVC(random_state=66, penalty='l1', loss='squared_hinge', dual=False)
-    svm5.fit(X_train, y_train)
-    y_pred = svm5.predict(X_test)
     
     print('SVM model 5:')
     print("Accuracy: %0.4f"%accuracy_score(y_test, y_pred))
